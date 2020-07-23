@@ -2,27 +2,31 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <meta charset="utf-8" />
-  <title property="foaf:name schema:name">My Awesome Article</title>
+  <title property="foaf:name schema:name">RDF Test Suite: Improving Developer Experience for Achieving Specification Compliance</title>
   <link rel="stylesheet" media="screen" href="styles/screen.css" />
   <link rel="stylesheet" media="print"  href="styles/print.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   
-  <meta name="citation_title" content="My Awesome Article">
-  <meta name="citation_author" content="John Doe" />
+  <meta name="citation_title" content="RDF Test Suite: Improving Developer Experience for Achieving Specification Compliance">
+  <meta name="citation_author" content="Ruben Taelman" />
+  <meta name="citation_author" content="Ruben Verborgh" />
   
   <meta name="citation_publication_date" content="2020/07/23" />
 </head>
 
 <body prefix="dctypes: http://purl.org/dc/dcmitype/ pimspace: http://www.w3.org/ns/pim/space# rsa: http://www.w3.org/ns/auth/rsa# cert: http://www.w3.org/ns/auth/cert# wgs: http://www.w3.org/2003/01/geo/wgs84_pos# biblio: http://purl.org/net/biblio# bibo: http://purl.org/ontology/bibo/ book: http://purl.org/NET/book/vocab# ov: http://open.vocab.org/terms/ doap: http://usefulinc.com/ns/doap# dbr: http://dbpedia.org/resource/ dbp: http://dbpedia.org/property/ sio: http://semanticscience.org/resource/ opmw: http://www.opmw.org/ontology/ deo: http://purl.org/spar/deo/ doco: http://purl.org/spar/doco/ cito: http://purl.org/spar/cito/ fabio: http://purl.org/spar/fabio/ solid: http://www.w3.org/ns/solid/terms# acl: http://www.w3.org/ns/auth/acl# dio: https://w3id.org/dio# lsc: http://linkedscience.org/lsc/ns#" typeof="schema:CreativeWork sioc:Post prov:Entity lsc:Research">
   <header>
-  <h1 id="my-awesome-article">My Awesome Article</h1>
+  <h1 id="rdf-test-suite-improving-developer-experience-for-achieving-specification-compliance">RDF Test Suite: Improving Developer Experience for Achieving Specification Compliance</h1>
 
   <ul id="authors">
-    <li><a rev="lsc:participatesIn" property="foaf:maker schema:creator schema:author schema:publisher" href="http://www.example.org/" typeof="foaf:Person schema:Person" resource="http://www.example.org/#me">John Doe</a></li>
+    <li><a rev="lsc:participatesIn" property="foaf:maker schema:creator schema:author schema:publisher" href="http://www.rubensworks.net/" typeof="foaf:Person schema:Person" resource="https://www.rubensworks.net/#me">Ruben Taelman</a></li>
+    <li><a rev="lsc:participatesIn" property="foaf:maker schema:creator schema:author schema:publisher" href="https://ruben.verborgh.org/" typeof="foaf:Person schema:Person" resource="https://ruben.verborgh.org/profile/#me">Ruben Verborgh</a></li>
   </ul>
 
   <ul id="affiliations">
-    <li id="myaffiliation">Awesome Inc.</li>
+    <li id="idlab">IDLab,
+          Department of Electronics and Information Systems,
+          Ghent University – imec</li>
   </ul>
 
   <section id="abstract" inlist="" rel="schema:hasPart" resource="#abstract">
@@ -49,17 +53,93 @@ Donec quis lectus eget sem tempor tristique pellentesque in dolor.</p>
 </header>
 
 <main>
-  <!-- Add sections by specifying their file name, excluding the '.md' suffix. -->
   <section id="introduction" inlist="" rel="schema:hasPart" resource="#introduction">
 <div datatype="rdf:HTML" property="schema:description">
       <h2 property="schema:name">Introduction</h2>
 
-      <p>This is a great article on the Semantic Web <span class="references">[<a href="#ref-1">1</a>]</span>, written in Markdown.</p>
+      <p>One fundamental part of the <a property="schema:citation http://purl.org/spar/cito/cites" href="https://www.w3.org/DesignIssues/LinkedData.html">Linked Data principles</a> <span class="references">[<a href="#ref-1">1</a>]</span> is the usage of open Web specifications.
+This concept is important because Linked Data should not require specific tools or services,
+but it should be software-independent.
+This means that anyone should be able to implement these specifications,
+and that the resulting software should be able to handle Linked Data
+that may have been produced by other implementations.</p>
 
-      <p>Make sure to <a href="https://www.principiae.be/book/pdfs/TM&amp;Th-2.0-summary.pdf">write your document effectively</a>!</p>
+      <p>When implementing a specification, it is crucial that the resulting implementation is <em>correct</em> according to a specification.
+Concretely, this means that all specified cases must produce the correct result.
+For example, a parser implementation for the JSON-LD 1.1 syntax specification <span class="references">[<a href="#ref-2">2</a>]</span>
+must produce the expected RDF triples for given JSON-LD documents.</p>
 
-      <p class="todo">Write proper introduction.
-More information on snippets like this can be found on the <a href="https://github.com/rubensworks/ScholarMarkdown/wiki/Snippets">ScholarMarkdown wiki</a>.</p>
+      <p>Most Linked Data-related specifications make use of declarative test suites.
+These test suites are represented in RDF, and are published via the Linked Data principles.
+Historically, the <a href="http://www.w3.org/2001/sw/DataAccess/">RDF Data Access Working Group (DAWG)</a>
+was the first to define such a test suite for the <a property="schema:citation http://purl.org/spar/cito/cites" href="https://www.w3.org/TR/2013/REC-sparql11-query-20130321/">SPARQL query language</a> <span class="references">[<a href="#ref-3">3</a>]</span>.
+The DAWG defined the test manifest vocabulary that allows one or more <em>tests</em> to be included in a <em>test manifest</em>.
+Each test defines a certain <em>action</em> and a corresponding <em>result</em>.
+In the case of the SPARQL test suite,
+this action describes a SPARQL query and a datasets,
+and the result describes a SPARQL query result.
+In order for implementations to prove their compliance to the SPARQL specification,
+they need to execute all tests in this test suite.
+The test results for such test suites are typically represented using the EARL vocabulary <span class="references">[<a href="#ref-4">4</a>]</span>,
+which allows test assertions to be represented about whether or not given software passes a certain test.
+Since this test manifest vocabulary from the DAWG has proven to be a robust basis for representing test manifests,
+it has been adopted by many other specifications to represent their test suite,
+such as JSON-LD <span class="references">[<a href="#ref-2">2</a>]</span>, <a property="schema:citation http://purl.org/spar/cito/cites" href="https://www.w3.org/TR/turtle/">Turtle</a> <span class="references">[<a href="#ref-5">5</a>]</span>, and <a property="schema:citation http://purl.org/spar/cito/cites" href="https://www.w3.org/TR/rdfa-primer/">RDFa</a> <span class="references">[<a href="#ref-6">6</a>]</span>.
+All of these test suites are being maintained by the <a href="https://github.com/w3c/rdf-tests" class="mandatory" data-link-text="https:/​/​github.com/​w3c/​rdf-​tests">RDF Tests W3C Community Group</a>.</p>
+
+      <p>While the availability of declarative test suites is highly beneficial for ensuring specification compliance,
+the fact that they are not directly executable can lead to a large overhead for developers.
+A developer wanting to execute a test suite against an implementing has to go through the following steps:</p>
+
+      <ol>
+        <li><strong>Download</strong> the test manifest</li>
+        <li><strong>Parse</strong> the manifest based on a certain RDF syntax</li>
+        <li><strong>Follow links</strong> to other parts of the manifest if applicable</li>
+        <li><strong>Interpret</strong> the test definitions as executable logic</li>
+        <li><strong>Execute</strong> all tests</li>
+        <li><strong>Report</strong> the test results</li>
+      </ol>
+
+      <p>Unfortunately, these steps require a significant implementation effort,
+which adds an additional burden next to the developer’s implementation effort of the specification.
+In order to alleviate this burden, we introduce a tool for JavaScript applications called <em>RDF Test Suite</em>
+that abstracts these steps in a developer-friendly way.
+This tool allows developers to focus on the part they are really interested in,
+i.e., implementing a specification.
+While testing specification compliance is important,
+it should not require more effort from the developer than calling a single command,
+which is exactly what RDF Test Suite provides.</p>
+
+      <p>In this article, we report on the implementation of RDF Test Suite,
+how it can be used,
+and what the future steps are.</p>
+
+    </div>
+</section>
+
+  <section id="implementation" inlist="" rel="schema:hasPart" resource="#implementation">
+<div datatype="rdf:HTML" property="schema:description">
+      <h2 property="schema:name">Implementation</h2>
+
+      <p class="todo">JS + main features, inspired by mocha and jest, modular+pluggable</p>
+
+    </div>
+</section>
+
+  <section id="usage" inlist="" rel="schema:hasPart" resource="#usage">
+<div datatype="rdf:HTML" property="schema:description">
+      <h2 property="schema:name">Usage</h2>
+
+      <p class="todo">jsonld parsers + comunica</p>
+
+    </div>
+</section>
+
+  <section id="conclusions" inlist="" rel="schema:hasPart" resource="#conclusions">
+<div datatype="rdf:HTML" property="schema:description">
+      <h2 property="schema:name">Conclusions</h2>
+
+      <p class="todo">easier, related tools in other langs (ruby, swobjects), future work</p>
 
     </div>
 </section>
@@ -70,7 +150,17 @@ More information on snippets like this can be found on the <a href="https://gith
 <h2 id="references">References</h2>
 <dl class="references">
   <dt id="ref-1">[1]</dt>
-  <dd resource="#semanticweb" typeof="schema:Article">Berners-Lee, T., Hendler, J., Lassila, O., others: The semantic web. Scientific American. 284, 28–37 (2001).</dd>
+  <dd resource="https://www.w3.org/DesignIssues/LinkedData.html" typeof="schema:CreativeWork">Berners-Lee, T.: Linked Data. <a href="https://www.w3.org/DesignIssues/LinkedData.html">https:/​/​www.w3.org/DesignIssues/LinkedData.html</a> (2009).</dd>
+  <dt id="ref-2">[2]</dt>
+  <dd resource="#jsonld" typeof="schema:Thesis">Sporny, M., Longley, D., Kellogg, G., Lanthaler, M., Champin, P.-A., Lindström, N.: JSON-LD 1.1–a JSON-based serialization for Linked Data (2019).</dd>
+  <dt id="ref-3">[3]</dt>
+  <dd resource="https://www.w3.org/TR/2013/REC-sparql11-query-20130321/" typeof="schema:CreativeWork">Harris, S., Seaborne, A., Prud’hommeaux, E.: SPARQL 1.1 Query Language. W3C, <a href="https://www.w3.org/TR/2013/REC-sparql11-query-20130321/">https:/​/​www.w3.org/TR/2013/REC-sparql11-query-20130321/</a> (2013).</dd>
+  <dt id="ref-4">[4]</dt>
+  <dd resource="#earl" typeof="schema:Article">Abou-Zahra, S., Squillace, M.: Evaluation and report language (earl) 1.0 schema. W3C recommendation, W3C. (2006).</dd>
+  <dt id="ref-5">[5]</dt>
+  <dd resource="https://www.w3.org/TR/turtle/" typeof="schema:CreativeWork">Beckett, D., Berners-Lee, T., Prud’hommeaux, E., Carothers, G.: RDF 1.1 Turtle. W3C, <a href="https://www.w3.org/TR/turtle/">https:/​/​www.w3.org/TR/turtle/</a> (2014).</dd>
+  <dt id="ref-6">[6]</dt>
+  <dd resource="https://www.w3.org/TR/rdfa-primer/" typeof="schema:CreativeWork">Herman, I., Adida, B., Sporny, M., Birbeck, M.: RDFa 1.1 Primer - Third Edition. W3C, <a href="https://www.w3.org/TR/rdfa-primer/">https:/​/​www.w3.org/TR/rdfa-primer/</a> (2015).</dd>
 </dl>
 </section>
 </footer>
