@@ -121,7 +121,18 @@ and what the future steps are.</p>
 <div datatype="rdf:HTML" property="schema:description">
       <h2 property="schema:name">Implementation</h2>
 
-      <p class="todo">JS + main features, inspired by mocha and jest, modular+pluggable</p>
+      <p>A first design goal of our tool is that it should easily <em>fit into the developer’s tool chain</em>,
+and should behave in a manner that is familiar to developers.
+As such, we designed RDF Test Suite to behave similar to JavaScript testing frameworks
+such as <a href="https://jestjs.io/" class="mandatory" data-link-text="https:/​/​jestjs.io/​">Jest</a> and <a href="https://mochajs.org/" class="mandatory" data-link-text="https:/​/​mochajs.org/​">Mocha</a>.
+A second design goal is that the tool should be <em>generic</em> enough so that it can be used for different test suites,
+instead of being hardcoded to support only very specific test suites.
+For this, we opted for a <em>modular</em> architecture in which support for spec-specific features can be added without having to change any core logic.</p>
+
+      <p>We have implemented RDF Test Suite in TypeScript, which is a typed superset of JavaScript.
+It is available under the MIT license on <a href="https://github.com/rubensworks/rdf-test-suite.js" class="mandatory" data-link-text="https:/​/​github.com/​rubensworks/​rdf-​test-​suite.js">GitHub</a>.
+Furthermore, it is available for download on the <a href="https://www.npmjs.com/package/rdf-test-suite" class="mandatory" data-link-text="https:/​/​www.npmjs.com/​package/​rdf-​test-​suite">npm packager</a>.
+At the time of writing, it is confirmed to handle the test suites of SPARQL 1.1 Query, RDF/XML, N-Triples, N-Quads, Turtle, Trig, JSON-LD, RDFa, and N3.</p>
 
     </div>
 </section>
@@ -130,7 +141,8 @@ and what the future steps are.</p>
 <div datatype="rdf:HTML" property="schema:description">
       <h2 property="schema:name">Usage</h2>
 
-      <p class="todo">jsonld parsers + comunica</p>
+      <p class="todo">How to use
+jsonld parsers + comunica</p>
 
     </div>
 </section>
