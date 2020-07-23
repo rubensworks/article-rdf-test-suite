@@ -1,5 +1,5 @@
 ## Implementation
 {:#implementation}
 
-TODO
+JS + main features, inspired by mocha and jest, modular+pluggable
 {:.todo}

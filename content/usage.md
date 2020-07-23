@@ -1,5 +1,5 @@
 ## Usage
 {:#usage}
 
-TODO
+jsonld parsers + comunica
 {:.todo}
