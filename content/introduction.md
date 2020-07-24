@@ -20,7 +20,7 @@ was the first to define such a test suite for the [SPARQL query language](cite:c
 The DAWG defined the test manifest vocabulary that allows one or more _tests_ to be included in a _test manifest_.
 Each test defines a certain _action_ and a corresponding _result_.
 In the case of the SPARQL test suite,
-this action describes a SPARQL query and a datasets,
+this action describes a SPARQL query with a dataset,
 and the result describes a SPARQL query result.
 In order for implementations to prove their compliance to the SPARQL specification,
 they need to execute all tests in this test suite.
@@ -29,7 +29,7 @@ which allows test assertions to be represented about whether or not given softwa
 Since this test manifest vocabulary from the DAWG has proven to be a robust basis for representing test manifests,
 it has been adopted by many other specifications to represent their test suite,
 such as [JSON-LD](cite:cites jsonld), [Turtle](cite:cites turtle), and [RDFa](cite:cites rdfa).
-All of these test suites are being maintained by the [RDF Tests W3C Community Group](https://github.com/w3c/rdf-tests){:.mandatory}.
+Each of these test suites are being maintained by the [RDF Tests W3C Community Group](https://github.com/w3c/rdf-tests){:.mandatory}.
 An example of such a test suite can be seen in [](#example-manifest).
 
 <figure id="example-manifest" class="listing">
