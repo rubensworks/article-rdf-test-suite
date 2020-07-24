@@ -22,7 +22,7 @@ By default test results will be printed in a compact human-readable format,
 but the results can optionally also be [formatted in an EARL report](https://github.com/rubensworks/rdf-test-suite.js#earl-output).
 Additional details on more advanced features can be found in the [RDF Test Suite readme](https://github.com/rubensworks/rdf-test-suite.js#readme).
 
-So far, RDF Test Suite is being actively used in more than 15 JavaScript tools,
+So far, RDF Test Suite is being actively used in more than 15 JavaScript libraries,
 such as the [Comunica SPARQL query engine](cite:cites comunica),
 the [parsers of N3.js](https://github.com/rdfjs/N3.js){:.mandatory},
 and a [streaming JSON-LD parser](https://github.com/rubensworks/jsonld-streaming-parser.js){:.mandatory}.
