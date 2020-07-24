@@ -1,15 +1,21 @@
 ## Abstract
 <!-- Context      -->
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+Ensuring compliance of software libraries to certain specifications
+is crucial for ensuring interoperability within the Semantic Web.
+While many specifications publish their own declarative test suite,
+the actual execution of these test suites can add a huge overhead for library developers.
 <!-- Need         -->
-Vestibulum finibus dignissim augue, id pellentesque est facilisis non.
+In order to remove this burden from these developers,
 <!-- Task         -->
-Donec fringilla dolor non neque iaculis blandit.
+we introduce a JavaScript tool called _RDF Test Suite_
+that abstracts mosts steps of test suite execution.
 <!-- Object       -->
-Praesent aliquet eleifend iaculis.
+In this report, we discuss the design goals of RDF Test Suite,
+how it has been implemented,
+and how it can be used.
 <!-- Findings     -->
-Quisque pellentesque at odio ac bibendum.
+In practise, this tool is being used in a variety of tools,
 <!-- Conclusion   -->
-Pellentesque imperdiet felis urna, quis facilisis lacus gravida non.
+and it for ensured their specification compliance with minimal overhead.
 <!-- Perspectives -->
-Donec quis lectus eget sem tempor tristique pellentesque in dolor.
+
