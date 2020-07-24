@@ -30,6 +30,14 @@ Since this test manifest vocabulary from the DAWG has proven to be a robust basi
 it has been adopted by many other specifications to represent their test suite,
 such as [JSON-LD](cite:cites jsonld), [Turtle](cite:cites turtle), and [RDFa](cite:cites rdfa).
 All of these test suites are being maintained by the [RDF Tests W3C Community Group](https://github.com/w3c/rdf-tests){:.mandatory}.
+An example of such a test suite can be seen in [](#example-manifest).
+
+<figure id="example-manifest" class="listing">
+````/code/manifest.txt````
+<figcaption markdown="block">
+Part of the [manifest](https://w3c.github.io/json-ld-api/tests/toRdf-manifest.jsonld) of the JSON-LD 1.1 parsing test suite.
+</figcaption>
+</figure>
 
 While the availability of declarative test suites is highly beneficial for ensuring specification compliance,
 the fact that they are not directly executable can lead to a large overhead for developers.
