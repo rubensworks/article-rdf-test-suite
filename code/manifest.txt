@@ -1,0 +1,15 @@
+{
+  "@context": ["context.jsonld", {"@base": "toRdf-manifest"}],
+  "@id": "",
+  "@type": "mf:Manifest",
+  "name": "Transform JSON-LD to RDF",
+  "sequence": [{
+    "@id": "#t0001",
+    "@type": ["jld:PositiveEvaluationTest", "jld:ToRDFTest"],
+    "name": "Plain literal with URIs",
+    "purpose": "Tests generation of a triple using full URIs and a plain literal.",
+    "input": "toRdf/0001-in.jsonld",
+    "expect": "toRdf/0001-out.nq" },
+    ...
+  ]
+}

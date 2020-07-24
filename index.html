@@ -2,21 +2,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <meta charset="utf-8" />
-  <title property="foaf:name schema:name">RDF Test Suite: Improving Developer Experience for Achieving Specification Compliance</title>
+  <title property="foaf:name schema:name">RDF Test Suite: Improving Developer Experience for Building Specification-Compliant Libraries</title>
   <link rel="stylesheet" media="screen" href="styles/screen.css" />
   <link rel="stylesheet" media="print"  href="styles/print.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   
-  <meta name="citation_title" content="RDF Test Suite: Improving Developer Experience for Achieving Specification Compliance">
+  <meta name="citation_title" content="RDF Test Suite: Improving Developer Experience for Building Specification-Compliant Libraries">
   <meta name="citation_author" content="Ruben Taelman" />
   <meta name="citation_author" content="Ruben Verborgh" />
   
-  <meta name="citation_publication_date" content="2020/07/23" />
+  <meta name="citation_publication_date" content="2020/07/24" />
 </head>
 
 <body prefix="dctypes: http://purl.org/dc/dcmitype/ pimspace: http://www.w3.org/ns/pim/space# rsa: http://www.w3.org/ns/auth/rsa# cert: http://www.w3.org/ns/auth/cert# wgs: http://www.w3.org/2003/01/geo/wgs84_pos# biblio: http://purl.org/net/biblio# bibo: http://purl.org/ontology/bibo/ book: http://purl.org/NET/book/vocab# ov: http://open.vocab.org/terms/ doap: http://usefulinc.com/ns/doap# dbr: http://dbpedia.org/resource/ dbp: http://dbpedia.org/property/ sio: http://semanticscience.org/resource/ opmw: http://www.opmw.org/ontology/ deo: http://purl.org/spar/deo/ doco: http://purl.org/spar/doco/ cito: http://purl.org/spar/cito/ fabio: http://purl.org/spar/fabio/ solid: http://www.w3.org/ns/solid/terms# acl: http://www.w3.org/ns/auth/acl# dio: https://w3id.org/dio# lsc: http://linkedscience.org/lsc/ns#" typeof="schema:CreativeWork sioc:Post prov:Entity lsc:Research">
   <header>
-  <h1 id="rdf-test-suite-improving-developer-experience-for-achieving-specification-compliance">RDF Test Suite: Improving Developer Experience for Achieving Specification Compliance</h1>
+  <h1 id="rdf-test-suite-improving-developer-experience-for-building-specification-compliant-libraries">RDF Test Suite: Improving Developer Experience for Building Specification-Compliant Libraries</h1>
 
   <ul id="authors">
     <li><a rev="lsc:participatesIn" property="foaf:maker schema:creator schema:author schema:publisher" href="http://www.rubensworks.net/" typeof="foaf:Person schema:Person" resource="https://www.rubensworks.net/#me">Ruben Taelman</a></li>
@@ -33,19 +33,24 @@
 <div datatype="rdf:HTML" property="schema:description">
       <h2 property="schema:name">Abstract</h2>
       <!-- Context      -->
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      <p>Ensuring compliance of software libraries to certain specifications
+is crucial for ensuring interoperability within the Semantic Web.
+While many specifications publish their own declarative test suite for testing compliance,
+the actual execution of these test suites can add a huge overhead for library developers.
 <!-- Need         -->
-Vestibulum finibus dignissim augue, id pellentesque est facilisis non.
+In order to remove this burden from these developers,
 <!-- Task         -->
-Donec fringilla dolor non neque iaculis blandit.
+we introduce a JavaScript tool called <em>RDF Test Suite</em>
+that takes care of all the required bookkeeping behind test suite execution.
 <!-- Object       -->
-Praesent aliquet eleifend iaculis.
+In this report, we discuss the design goals of RDF Test Suite,
+how it has been implemented,
+and how it can be used.
 <!-- Findings     -->
-Quisque pellentesque at odio ac bibendum.
+In practise, this tool is being used in a variety of libraries,
 <!-- Conclusion   -->
-Pellentesque imperdiet felis urna, quis facilisis lacus gravida non.
-<!-- Perspectives -->
-Donec quis lectus eget sem tempor tristique pellentesque in dolor.</p>
+and it ensures their specification compliance with minimal overhead.
+<!-- Perspectives --></p>
 
     </div>
 </section>
@@ -66,7 +71,7 @@ that may have been produced by other implementations.</p>
 
       <p>When implementing a specification, it is crucial that the resulting implementation is <em>correct</em> according to a specification.
 Concretely, this means that all specified cases must produce the correct result.
-For example, a parser implementation for the JSON-LD 1.1 syntax specification <span class="references">[<a href="#ref-2">2</a>]</span>
+For example, a parser implementation for the <a property="schema:citation http://purl.org/spar/cito/cites" href="https://www.w3.org/TR/json-ld11/">JSON-LD 1.1 syntax specification</a> <span class="references">[<a href="#ref-2">2</a>]</span>
 must produce the expected RDF triples for given JSON-LD documents.</p>
 
       <p>Most Linked Data-related specifications make use of declarative test suites.
@@ -76,7 +81,7 @@ was the first to define such a test suite for the <a property="schema:citation h
 The DAWG defined the test manifest vocabulary that allows one or more <em>tests</em> to be included in a <em>test manifest</em>.
 Each test defines a certain <em>action</em> and a corresponding <em>result</em>.
 In the case of the SPARQL test suite,
-this action describes a SPARQL query and a datasets,
+this action describes a SPARQL query with a dataset,
 and the result describes a SPARQL query result.
 In order for implementations to prove their compliance to the SPARQL specification,
 they need to execute all tests in this test suite.
@@ -84,8 +89,30 @@ The test results for such test suites are typically represented using the EARL v
 which allows test assertions to be represented about whether or not given software passes a certain test.
 Since this test manifest vocabulary from the DAWG has proven to be a robust basis for representing test manifests,
 it has been adopted by many other specifications to represent their test suite,
-such as JSON-LD <span class="references">[<a href="#ref-2">2</a>]</span>, <a property="schema:citation http://purl.org/spar/cito/cites" href="https://www.w3.org/TR/turtle/">Turtle</a> <span class="references">[<a href="#ref-5">5</a>]</span>, and <a property="schema:citation http://purl.org/spar/cito/cites" href="https://www.w3.org/TR/rdfa-primer/">RDFa</a> <span class="references">[<a href="#ref-6">6</a>]</span>.
-All of these test suites are being maintained by the <a href="https://github.com/w3c/rdf-tests" class="mandatory" data-link-text="https:/​/​github.com/​w3c/​rdf-​tests">RDF Tests W3C Community Group</a>.</p>
+such as <a property="schema:citation http://purl.org/spar/cito/cites" href="https://www.w3.org/TR/json-ld11/">JSON-LD</a> <span class="references">[<a href="#ref-2">2</a>]</span>, <a property="schema:citation http://purl.org/spar/cito/cites" href="https://www.w3.org/TR/turtle/">Turtle</a> <span class="references">[<a href="#ref-5">5</a>]</span>, and <a property="schema:citation http://purl.org/spar/cito/cites" href="https://www.w3.org/TR/rdfa-primer/">RDFa</a> <span class="references">[<a href="#ref-6">6</a>]</span>.
+Each of these test suites are being maintained by the <a href="https://github.com/w3c/rdf-tests" class="mandatory" data-link-text="https:/​/​github.com/​w3c/​rdf-​tests">RDF Tests W3C Community Group</a>.
+An example of such a test suite can be seen in <a href="#example-manifest">Listing 1</a>.</p>
+
+      <figure id="example-manifest" class="listing">
+<pre><code>{
+</code><code>  &quot;@context&quot;: [&quot;context.jsonld&quot;, {&quot;@base&quot;: &quot;toRdf-manifest&quot;}],
+</code><code>  &quot;@id&quot;: &quot;&quot;,
+</code><code>  &quot;@type&quot;: &quot;mf:Manifest&quot;,
+</code><code>  &quot;name&quot;: &quot;Transform JSON-LD to RDF&quot;,
+</code><code>  &quot;sequence&quot;: [{
+</code><code>    &quot;@id&quot;: &quot;#t0001&quot;,
+</code><code>    &quot;@type&quot;: [&quot;jld:PositiveEvaluationTest&quot;, &quot;jld:ToRDFTest&quot;],
+</code><code>    &quot;name&quot;: &quot;Plain literal with URIs&quot;,
+</code><code>    &quot;purpose&quot;: &quot;Tests generation of a triple using full URIs and a plain literal.&quot;,
+</code><code>    &quot;input&quot;: &quot;toRdf/0001-in.jsonld&quot;,
+</code><code>    &quot;expect&quot;: &quot;toRdf/0001-out.nq&quot; },
+</code><code>    ...
+</code><code>  ]
+</code><code>}</code></pre>
+<figcaption>
+          <p><span class="label">Listing 1:</span> Part of the <a href="https://w3c.github.io/json-ld-api/tests/toRdf-manifest.jsonld">manifest</a> of the JSON-LD 1.1 parsing test suite.</p>
+        </figcaption>
+</figure>
 
       <p>While the availability of declarative test suites is highly beneficial for ensuring specification compliance,
 the fact that they are not directly executable can lead to a large overhead for developers.
@@ -102,7 +129,7 @@ A developer wanting to execute a test suite against an implementing has to go th
 
       <p>Unfortunately, these steps require a significant implementation effort,
 which adds an additional burden next to the developer’s implementation effort of the specification.
-In order to alleviate this burden, we introduce a tool for JavaScript applications called <em>RDF Test Suite</em>
+In order to alleviate this burden, we introduce a JavaScript tool called <em>RDF Test Suite</em>
 that abstracts these steps in a developer-friendly way.
 This tool allows developers to focus on the part they are really interested in,
 i.e., implementing a specification.
@@ -121,12 +148,12 @@ and what the future steps are.</p>
 <div datatype="rdf:HTML" property="schema:description">
       <h2 property="schema:name">Implementation</h2>
 
-      <p>A first design goal of our tool is that it should easily <em>fit into the developer’s tool chain</em>,
+      <p>A first design goal of our tool is that it should <em>easily fit</em> into the developer’s tool chain,
 and should behave in a manner that is familiar to developers.
 As such, we designed RDF Test Suite to behave similar to JavaScript testing frameworks
 such as <a href="https://jestjs.io/" class="mandatory" data-link-text="https:/​/​jestjs.io/​">Jest</a> and <a href="https://mochajs.org/" class="mandatory" data-link-text="https:/​/​mochajs.org/​">Mocha</a>.
-A second design goal is that the tool should be <em>generic</em> enough so that it can be used for different test suites,
-instead of being hardcoded to support only very specific test suites.
+A second design goal is that the tool should be <em>generic</em> enough so that it can be used for different types of test suites,
+instead of being hardcoded to support only one very specific test suite.
 For this, we opted for a <em>modular</em> architecture in which support for spec-specific features can be added without having to change any core logic.</p>
 
       <p>We have implemented RDF Test Suite in TypeScript, which is a typed superset of JavaScript.
@@ -141,8 +168,52 @@ At the time of writing, it is confirmed to handle the test suites of SPARQL 1.1 
 <div datatype="rdf:HTML" property="schema:description">
       <h2 property="schema:name">Usage</h2>
 
-      <p class="todo">How to use
-jsonld parsers + comunica</p>
+      <p>In order to use RDF Test Suite on the command line, at least two arguments need to be passed:</p>
+
+      <ol>
+        <li>Path to a JavaScript engine file</li>
+        <li>URL of a test manifest</li>
+      </ol>
+
+      <p>The JavaScript file must point to an implementation of a specific interface, which depends on the test suite.
+For example, if syntax parsing tests are being executed, an <a href="https://github.com/rubensworks/rdf-test-suite.js/blob/master/lib/testcase/rdfsyntax/IParser.ts"><code>IParser</code></a> interface is required,
+while <a href="https://github.com/rubensworks/rdf-test-suite.js/blob/master/lib/testcase/sparql/IQueryEngine.ts"><code>IQueryEngine</code></a> must be passed for query execution tests.
+The exact implementation is up to the developer, as only the specified interface is relevant to RDF Test Suite.
+Since RDF Test Suite runs on Node.js, other programs can be invoked from JavaScript via the <a href="https://nodejs.org/api/child_process.html"><code>child_process</code> module</a>,
+which means that non-JavaScript implementations can also be tested with this tool.</p>
+
+      <p>By default, <em>all</em> tests from the manifest and its dependencies will be executed against the given implementation.
+Optionally, the user can decide to <a href="https://github.com/rubensworks/rdf-test-suite.js#test-filtering">filter tests</a>
+if only one or a few tests need to be executed.
+Since large test suites can require many HTTP requests to be executed,
+the test suite can optionally be <a href="https://github.com/rubensworks/rdf-test-suite.js#enabling-http-caching">cached</a>.
+By default test results will be printed in a compact human-readable format,
+but the results can optionally also be <a href="https://github.com/rubensworks/rdf-test-suite.js#earl-output">formatted in an EARL report</a>.
+Additional details on more advanced features can be found in the <a href="https://github.com/rubensworks/rdf-test-suite.js#readme" class="mandatory" data-link-text="https:/​/​github.com/​rubensworks/​rdf-​test-​suite.js#readme">RDF Test Suite readme</a>.</p>
+
+      <p>So far, RDF Test Suite is actively being used in more than 15 JavaScript libraries,
+such as the <a property="schema:citation http://purl.org/spar/cito/cites" href="https://comunica.github.io/Article-ISWC2018-Resource/">Comunica SPARQL query engine</a> <span class="references">[<a href="#ref-7">7</a>]</span>,
+the <a href="https://github.com/rdfjs/N3.js" class="mandatory" data-link-text="https:/​/​github.com/​rdfjs/​N3.js">parsers of N3.js</a>,
+and a <a href="https://github.com/rubensworks/jsonld-streaming-parser.js" class="mandatory" data-link-text="https:/​/​github.com/​rubensworks/​jsonld-​streaming-​parser.js">streaming JSON-LD parser</a>.
+<a href="#example-exec">Listing 2</a> shows an example of RDF Test Suite being executed by the streaming JSON-LD parser.</p>
+
+      <figure id="example-exec" class="listing">
+<pre><code>$ rdf-test-suite spec/parser.js \
+</code><code>  https://w3c.github.io/json-ld-api/tests/toRdf-manifest.jsonld
+</code><code>...
+</code><code>✔ @import may not be used in an imported context.
+</code><code>✔ @import can only reference a single context
+</code><code>✔ @type: @none is illegal in 1.0.
+</code><code>ℹ A context may not include itself recursively (direct)
+</code><code>✔ Triples including invalid subject IRIs are rejected
+</code><code>✔ Triples including invalid predicate IRIs are rejected
+</code><code>✔ Triples including invalid object IRIs are rejected
+</code><code>✔ 460 / 460 tests succeeded! (skipped 11)
+</code></pre>
+<figcaption>
+          <p><span class="label">Listing 2:</span> Part of the JSON-LD 1.1 parsing test suite results when executed against the <a href="https://github.com/rubensworks/jsonld-streaming-parser.js">streaming JSON-LD parser</a>.</p>
+        </figcaption>
+</figure>
 
     </div>
 </section>
@@ -151,7 +222,18 @@ jsonld parsers + comunica</p>
 <div datatype="rdf:HTML" property="schema:description">
       <h2 property="schema:name">Conclusions</h2>
 
-      <p class="todo">easier, related tools in other langs (ruby, swobjects), future work</p>
+      <p>The RDF Test Suite has been shown to aid developers in achieving and testing specification compliance,
+by removing the overhead of test suite interpretation and execution.
+It is in use by multiple key RDF libraries for JavaScript.
+Not only does it simplify test suite <em>execution</em>, it also simplifies its <em>development</em>
+due to its ability to <a href="https://github.com/rubensworks/rdf-test-suite.js#map-urls-to-local-files">temporarily inject local files into a test suite</a>.
+For instance, this simplified the creation of several tests for the JSON-LD test suite within the JSON-LD 1.1 Working Group.</p>
+
+      <p>In future work, we will add support for more test suites, such as SPARQL 1.1 Update and JSON-LD 1.1 framing.
+Furthermore, we aim to set up a service around this tool in which test suites can be executed against registered libraries,
+with the option to publicly display the test results.
+Such a service would allow developers to register their library for continuous test suite evaluation,
+and library users to easily choose certain tools based on their test results and specification compliance.</p>
 
     </div>
 </section>
@@ -164,7 +246,7 @@ jsonld parsers + comunica</p>
   <dt id="ref-1">[1]</dt>
   <dd resource="https://www.w3.org/DesignIssues/LinkedData.html" typeof="schema:CreativeWork">Berners-Lee, T.: Linked Data. <a href="https://www.w3.org/DesignIssues/LinkedData.html">https:/​/​www.w3.org/DesignIssues/LinkedData.html</a> (2009).</dd>
   <dt id="ref-2">[2]</dt>
-  <dd resource="#jsonld" typeof="schema:Thesis">Sporny, M., Longley, D., Kellogg, G., Lanthaler, M., Champin, P.-A., Lindström, N.: JSON-LD 1.1–a JSON-based serialization for Linked Data (2019).</dd>
+  <dd resource="https://www.w3.org/TR/json-ld11/" typeof="schema:CreativeWork">Sporny, M., Longley, D., Kellogg, G., Lanthaler, M., Champin, P.-A., Lindström, N.: SON-LD 1.1–a JSON-based serialization for Linked Data. W3C, <a href="https://www.w3.org/TR/json-ld11/">https:/​/​www.w3.org/TR/json-ld11/</a> (2020).</dd>
   <dt id="ref-3">[3]</dt>
   <dd resource="https://www.w3.org/TR/2013/REC-sparql11-query-20130321/" typeof="schema:CreativeWork">Harris, S., Seaborne, A., Prud’hommeaux, E.: SPARQL 1.1 Query Language. W3C, <a href="https://www.w3.org/TR/2013/REC-sparql11-query-20130321/">https:/​/​www.w3.org/TR/2013/REC-sparql11-query-20130321/</a> (2013).</dd>
   <dt id="ref-4">[4]</dt>
@@ -173,6 +255,8 @@ jsonld parsers + comunica</p>
   <dd resource="https://www.w3.org/TR/turtle/" typeof="schema:CreativeWork">Beckett, D., Berners-Lee, T., Prud’hommeaux, E., Carothers, G.: RDF 1.1 Turtle. W3C, <a href="https://www.w3.org/TR/turtle/">https:/​/​www.w3.org/TR/turtle/</a> (2014).</dd>
   <dt id="ref-6">[6]</dt>
   <dd resource="https://www.w3.org/TR/rdfa-primer/" typeof="schema:CreativeWork">Herman, I., Adida, B., Sporny, M., Birbeck, M.: RDFa 1.1 Primer - Third Edition. W3C, <a href="https://www.w3.org/TR/rdfa-primer/">https:/​/​www.w3.org/TR/rdfa-primer/</a> (2015).</dd>
+  <dt id="ref-7">[7]</dt>
+  <dd resource="https://comunica.github.io/Article-ISWC2018-Resource/" typeof="schema:Article">Taelman, R., Van Herwegen, J., Vander Sande, M., Verborgh, R.: Comunica: a Modular SPARQL Query Engine for the Web. In: Proceedings of the 17th International Semantic Web Conference (2018).</dd>
 </dl>
 </section>
 </footer>
