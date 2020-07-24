@@ -44,7 +44,7 @@ A developer wanting to execute a test suite against an implementing has to go th
 
 Unfortunately, these steps require a significant implementation effort,
 which adds an additional burden next to the developer's implementation effort of the specification.
-In order to alleviate this burden, we introduce a tool for JavaScript applications called _RDF Test Suite_
+In order to alleviate this burden, we introduce a JavaScript tool called _RDF Test Suite_
 that abstracts these steps in a developer-friendly way.
 This tool allows developers to focus on the part they are really interested in,
 i.e., implementing a specification.
