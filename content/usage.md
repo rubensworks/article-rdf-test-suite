@@ -26,3 +26,11 @@ So far, RDF Test Suite is being actively used in more than 15 JavaScript librari
 such as the [Comunica SPARQL query engine](cite:cites comunica),
 the [parsers of N3.js](https://github.com/rdfjs/N3.js){:.mandatory},
 and a [streaming JSON-LD parser](https://github.com/rubensworks/jsonld-streaming-parser.js){:.mandatory}.
+[](#example-exec) shows an example of RDF Test Suite being executed by the streaming JSON-LD parser.
+
+<figure id="example-exec" class="listing">
+````/code/exec.txt````
+<figcaption markdown="block">
+Part of the JSON-LD 1.1 parsing test suite results when executed against the [streaming JSON-LD parser](https://github.com/rubensworks/jsonld-streaming-parser.js).
+</figcaption>
+</figure>

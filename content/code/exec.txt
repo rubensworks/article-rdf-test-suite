@@ -1,0 +1,15 @@
+$ rdf-test-suite spec/parser.js \
+  https://w3c.github.io/json-ld-api/tests/toRdf-manifest.jsonld
+...
+✔ @import may not be used in an imported context.
+✔ @import can only reference a single context
+✔ @type: @none is illegal in 1.0.
+✔ @type: @none expands strings as value objects
+ℹ A context may not include itself recursively (direct)
+✔ Triples including invalid subject IRIs are rejected
+✔ Triples including invalid predicate IRIs are rejected
+✔ Triples including invalid object IRIs are rejected
+✔ Triples including invalid type IRIs are rejected
+✔ Triples including invalid language tags are rejected
+✔ Triples including invalid graph name IRIs are rejected
+✔ 460 / 460 tests succeeded! (skipped 11)
