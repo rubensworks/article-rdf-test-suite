@@ -9,9 +9,8 @@
   
   <meta name="citation_title" content="RDF Test Suite: Improving Developer Experience for Building Specification-Compliant Libraries">
   <meta name="citation_author" content="Ruben Taelman" />
-  <meta name="citation_author" content="Ruben Verborgh" />
   
-  <meta name="citation_publication_date" content="2020/07/24" />
+  <meta name="citation_publication_date" content="2020/08/10" />
 </head>
 
 <body prefix="dctypes: http://purl.org/dc/dcmitype/ pimspace: http://www.w3.org/ns/pim/space# rsa: http://www.w3.org/ns/auth/rsa# cert: http://www.w3.org/ns/auth/cert# wgs: http://www.w3.org/2003/01/geo/wgs84_pos# biblio: http://purl.org/net/biblio# bibo: http://purl.org/ontology/bibo/ book: http://purl.org/NET/book/vocab# ov: http://open.vocab.org/terms/ doap: http://usefulinc.com/ns/doap# dbr: http://dbpedia.org/resource/ dbp: http://dbpedia.org/property/ sio: http://semanticscience.org/resource/ opmw: http://www.opmw.org/ontology/ deo: http://purl.org/spar/deo/ doco: http://purl.org/spar/doco/ cito: http://purl.org/spar/cito/ fabio: http://purl.org/spar/fabio/ solid: http://www.w3.org/ns/solid/terms# acl: http://www.w3.org/ns/auth/acl# dio: https://w3id.org/dio# lsc: http://linkedscience.org/lsc/ns#" typeof="schema:CreativeWork sioc:Post prov:Entity lsc:Research">
@@ -20,7 +19,6 @@
 
   <ul id="authors">
     <li><a rev="lsc:participatesIn" property="foaf:maker schema:creator schema:author schema:publisher" href="http://www.rubensworks.net/" typeof="foaf:Person schema:Person" resource="https://www.rubensworks.net/#me">Ruben Taelman</a></li>
-    <li><a rev="lsc:participatesIn" property="foaf:maker schema:creator schema:author schema:publisher" href="https://ruben.verborgh.org/" typeof="foaf:Person schema:Person" resource="https://ruben.verborgh.org/profile/#me">Ruben Verborgh</a></li>
   </ul>
 
   <ul id="affiliations">
@@ -33,7 +31,7 @@
 <div datatype="rdf:HTML" property="schema:description">
       <h2 property="schema:name">Abstract</h2>
       <!-- Context      -->
-      <p>Ensuring compliance of software libraries to certain specifications
+      <p>Guaranteeing compliance of software libraries to certain specifications
 is crucial for ensuring interoperability within the Semantic Web.
 While many specifications publish their own declarative test suite for testing compliance,
 the actual execution of these test suites can add a huge overhead for library developers.
@@ -47,7 +45,7 @@ In this report, we discuss the design goals of RDF Test Suite,
 how it has been implemented,
 and how it can be used.
 <!-- Findings     -->
-In practise, this tool is being used in a variety of libraries,
+In practice, this tool is being used in a variety of libraries,
 <!-- Conclusion   -->
 and it ensures their specification compliance with minimal overhead.
 <!-- Perspectives --></p>
@@ -63,8 +61,11 @@ and it ensures their specification compliance with minimal overhead.
       <h2 property="schema:name">Introduction</h2>
 
       <p>One fundamental part of the <a property="schema:citation http://purl.org/spar/cito/cites" href="https://www.w3.org/DesignIssues/LinkedData.html">Linked Data principles</a> <span class="references">[<a href="#ref-1">1</a>]</span> is the usage of open Web specifications.
+<span class="rephrase" data-author="RV">
 This concept is important because Linked Data should not require specific tools or services,
 but it should be software-independent.
+</span>
+<span class="comment" data-author="RV">This does not make sense to me; RDF does require RDF-specific tools?</span>
 This means that anyone should be able to implement these specifications,
 and that the resulting software should be able to handle Linked Data
 that may have been produced by other implementations.</p>
@@ -227,7 +228,8 @@ by removing the overhead of test suite interpretation and execution.
 It is in use by multiple key RDF libraries for JavaScript.
 Not only does it simplify test suite <em>execution</em>, it also simplifies its <em>development</em>
 due to its ability to <a href="https://github.com/rubensworks/rdf-test-suite.js#map-urls-to-local-files">temporarily inject local files into a test suite</a>.
-For instance, this simplified the creation of several tests for the JSON-LD test suite within the JSON-LD 1.1 Working Group.</p>
+For instance, this simplified the creation of several tests for the JSON-LD test suite within the JSON-LD 1.1 Working Group.
+<span class="comment" data-author="RV">Not immediately obvious to me what this means to JSON-LD, could you spell it out?</span></p>
 
       <p>In future work, we will add support for more test suites, such as SPARQL 1.1 Update and JSON-LD 1.1 framing.
 Furthermore, we aim to set up a service around this tool in which test suites can be executed against registered libraries,
