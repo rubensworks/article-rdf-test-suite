@@ -61,12 +61,8 @@ and it ensures their specification compliance with minimal overhead.
       <h2 property="schema:name">Introduction</h2>
 
       <p>One fundamental part of the <a property="schema:citation http://purl.org/spar/cito/cites" href="https://www.w3.org/DesignIssues/LinkedData.html">Linked Data principles</a> <span class="references">[<a href="#ref-1">1</a>]</span> is the usage of open Web specifications.
-<span class="rephrase" data-author="RV">
-This concept is important because Linked Data should not require specific tools or services,
-but it should be software-independent.
-</span>
-<span class="comment" data-author="RV">This does not make sense to me; RDF does require RDF-specific tools?</span>
-This means that anyone should be able to implement these specifications,
+Relying on specifications is important for ensuring that Linked Data does not rely only on certain specific tools or services.
+Instead, anyone should be able to implement these specifications,
 and that the resulting software should be able to handle Linked Data
 that may have been produced by other implementations.</p>
 
@@ -226,10 +222,7 @@ and a <a href="https://github.com/rubensworks/jsonld-streaming-parser.js" class=
       <p>The RDF Test Suite has been shown to aid developers in achieving and testing specification compliance,
 by removing the overhead of test suite interpretation and execution.
 It is in use by multiple key RDF libraries for JavaScript.
-Not only does it simplify test suite <em>execution</em>, it also simplifies its <em>development</em>
-due to its ability to <a href="https://github.com/rubensworks/rdf-test-suite.js#map-urls-to-local-files">temporarily inject local files into a test suite</a>.
-For instance, this simplified the creation of several tests for the JSON-LD test suite within the JSON-LD 1.1 Working Group.
-<span class="comment" data-author="RV">Not immediately obvious to me what this means to JSON-LD, could you spell it out?</span></p>
+Not only does it simplify test suite <em>execution</em>, it also simplifies the <a href="https://github.com/rubensworks/rdf-test-suite.js#map-urls-to-local-files"><em>development</em> of new test suites</a>.</p>
 
       <p>In future work, we will add support for more test suites, such as SPARQL 1.1 Update and JSON-LD 1.1 framing.
 Furthermore, we aim to set up a service around this tool in which test suites can be executed against registered libraries,
