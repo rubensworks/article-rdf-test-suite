@@ -2,8 +2,11 @@
 {:#introduction}
 
 One fundamental part of the [Linked Data principles](cite:cites LinkedDataPrinciples) is the usage of open Web specifications.
+<span class="rephrase" data-author="RV">
 This concept is important because Linked Data should not require specific tools or services,
 but it should be software-independent.
+</span>
+<span class="comment" data-author="RV">This does not make sense to me; RDF does require RDF-specific tools?</span>
 This means that anyone should be able to implement these specifications,
 and that the resulting software should be able to handle Linked Data
 that may have been produced by other implementations.

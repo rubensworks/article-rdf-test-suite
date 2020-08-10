@@ -7,6 +7,7 @@ It is in use by multiple key RDF libraries for JavaScript.
 Not only does it simplify test suite _execution_, it also simplifies its _development_
 due to its ability to [temporarily inject local files into a test suite](https://github.com/rubensworks/rdf-test-suite.js#map-urls-to-local-files).
 For instance, this simplified the creation of several tests for the JSON-LD test suite within the JSON-LD 1.1 Working Group.
+<span class="comment" data-author="RV">Not immediately obvious to me what this means to JSON-LD, could you spell it out?</span>
 
 In future work, we will add support for more test suites, such as SPARQL 1.1 Update and JSON-LD 1.1 framing.
 Furthermore, we aim to set up a service around this tool in which test suites can be executed against registered libraries,
